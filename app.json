@@ -1,0 +1,124 @@
+{
+  "name": "ADAM WhatsApp Bot",
+  "description": "A powerful multi-session WhatsApp bot with plugin system, group moderation, media tools, and REST API.",
+  "repository": "https://github.com/your-username/adam-bot",
+  "logo": "https://raw.githubusercontent.com/your-username/adam-bot/main/assets/logo.png",
+  "keywords": ["whatsapp", "bot", "baileys", "node"],
+  "env": {
+    "SESSION_ID": {
+      "description": "Your WhatsApp session ID (obtained from the bot's QR scan)",
+      "required": true
+    },
+    "PREFIX": {
+      "description": "Command prefix character",
+      "value": ".",
+      "required": false
+    },
+    "SUDO": {
+      "description": "Comma-separated list of owner phone numbers (e.g. 263XXXXXXXXX)",
+      "required": false
+    },
+    "BOT_LANG": {
+      "description": "Bot language code (en, fr, es, pt)",
+      "value": "en",
+      "required": false
+    },
+    "STICKER_PACKNAME": {
+      "description": "Sticker pack name in format pack,author",
+      "value": "⚡,ADAM",
+      "required": false
+    },
+    "VPS": {
+      "description": "Set to 'true' when deployed on a server",
+      "value": "true",
+      "required": false
+    },
+    "API_MODE": {
+      "description": "Run mode: 'bot' (bot only), 'api' (API only), or 'both'",
+      "value": "both",
+      "required": false
+    },
+    "API_KEY": {
+      "description": "Secret key for REST API authentication (leave blank to disable)",
+      "required": false
+    },
+    "GEMINI_API_KEY": {
+      "description": "Google Gemini API key for AI commands",
+      "required": false
+    },
+    "GEMINI_MODEL": {
+      "description": "Gemini model to use",
+      "value": "gemini-1.5-flash",
+      "required": false
+    },
+    "GROQ_API_KEY": {
+      "description": "Groq API key for Llama-based AI commands",
+      "required": false
+    },
+    "GROQ_MODEL": {
+      "description": "Groq model to use",
+      "value": "llama3-70b-8192",
+      "required": false
+    },
+    "OPENROUTER_API_KEY": {
+      "description": "OpenRouter API key",
+      "required": false
+    },
+    "OPENROUTER_MODEL": {
+      "description": "OpenRouter model to use",
+      "value": "openai/gpt-4o-mini:free",
+      "required": false
+    },
+    "WARN_LIMIT": {
+      "description": "Number of warnings before auto-kick",
+      "value": "3",
+      "required": false
+    },
+    "REJECT_CALL": {
+      "description": "Automatically reject incoming calls",
+      "value": "false",
+      "required": false
+    },
+    "AUTO_STATUS_VIEW": {
+      "description": "Automatically view status updates",
+      "value": "false",
+      "required": false
+    },
+    "ALWAYS_ONLINE": {
+      "description": "Keep bot presence as online",
+      "value": "false",
+      "required": false
+    },
+    "DATABASE_URL": {
+      "description": "PostgreSQL connection URL (leave blank to use SQLite)",
+      "required": false
+    },
+    "PORT": {
+      "description": "Port for the REST API server",
+      "value": "3000",
+      "required": false
+    },
+    "TIMEZONE": {
+      "description": "Timezone for date/time display",
+      "value": "Africa/Harare",
+      "required": false
+    },
+    "ANTIWORDS": {
+      "description": "Comma-separated list of banned words for anti-word filter",
+      "required": false
+    },
+    "ANTI_BOT": {
+      "description": "Remove bot accounts from groups automatically",
+      "value": "false",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [],
+  "buildpacks": []
+}

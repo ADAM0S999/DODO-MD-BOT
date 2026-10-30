@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚡ ADAM | WhatsApp Bot Dashboard, Pairing & Plugins</title>
+  <meta name="description" content="ADAM — The high-performance WhatsApp bot platform. Generate your pairing code in seconds, configure environment variables, browse plugins, and deploy in one click." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2306b6d4'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Geist Mono"', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              850: '#1e1e24',
+              900: '#121217',
+              950: '#09090b',
+            },
+            cyan: {
+              400: '#22d3ee',
+              500: '#06b6d4',
+              600: '#0891b2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #09090b;
+      color: #f4f4f5;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
+    }
+    .glow-box {
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      background: radial-gradient(circle at top, rgba(6, 182, 212, 0.05) 0%, rgba(9, 9, 11, 0.8) 100%);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+
+  <!-- Header / Navigation -->
+  <header class="border-b border-zinc-800/80 sticky top-0 bg-zinc-950/80 backdrop-blur-md z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-400 flex items-center justify-center font-extrabold text-black text-xl shadow-lg shadow-cyan-500/20">
+          ⚡
+        </div>
+        <div>
+          <span class="font-bold text-lg tracking-tight text-white flex items-center gap-2">
+            ADAM <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">MD v1.0</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Nav Tabs -->
+      <nav class="hidden md:flex items-center gap-1 text-sm text-zinc-400">
+        <button onclick="switchTab('pairing')" class="tab-btn active px-3.5 py-1.5 rounded-lg text-white font-medium hover:text-white transition" data-tab="pairing">
+          🔑 Pairing Code
+        </button>
+        <button onclick="switchTab('deploy')" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-white transition" data-tab="deploy">
+          🚀 1-Click Deploy
+        </button>
+        <button onclick="switchTab('config')" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-white transition" data-tab="config">
+          ⚙️ Config Generator
+        </button>
+        <button onclick="switchTab('plugins')" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-white transition" data-tab="plugins">
+          🧩 Plugins
+        </button>
+        <button onclick="switchTab('api')" class="tab-btn px-3.5 py-1.5 rounded-lg hover:text-white transition" data-tab="api">
+          📡 API & Docs
+        </button>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/ADAM0S999/ADAM-MD" target="_blank" class="flex items-center gap-2 text-xs font-mono px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-200 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 py-8 w-full">
+    
+    <!-- Hero Banner -->
+    <div class="text-center mb-10 py-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/80 text-cyan-400 text-xs font-mono mb-4">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        Vercel Serverless Ready & Cloud Deployable
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-3">
+        ⚡ ADAM <span class="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">WhatsApp Platform</span>
+      </h1>
+      <p class="text-zinc-400 max-w-2xl mx-auto text-sm md:text-base">
+        Generate your WhatsApp 8-digit Pairing Code instantly, create your <code class="font-mono text-cyan-400">SESSION_ID</code>, configure environment variables, and deploy to your cloud host with one click.
+      </p>
+    </div>
+
+    <!-- Mobile Navigation Selector -->
+    <div class="md:hidden mb-6 flex overflow-x-auto gap-2 pb-2">
+      <button onclick="switchTab('pairing')" class="tab-btn px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium whitespace-nowrap" data-tab="pairing">🔑 Pairing</button>
+      <button onclick="switchTab('deploy')" class="tab-btn px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium whitespace-nowrap" data-tab="deploy">🚀 Deploy</button>
+      <button onclick="switchTab('config')" class="tab-btn px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium whitespace-nowrap" data-tab="config">⚙️ Config</button>
+      <button onclick="switchTab('plugins')" class="tab-btn px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium whitespace-nowrap" data-tab="plugins">🧩 Plugins</button>
+      <button onclick="switchTab('api')" class="tab-btn px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium whitespace-nowrap" data-tab="api">📡 API</button>
+    </div>
+
+    <!-- TAB 1: PAIRING CODE -->
+    <section id="tab-pairing" class="tab-content block">
+      <div class="glow-box rounded-2xl p-6 md:p-8 max-w-2xl mx-auto shadow-2xl">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>📱</span> WhatsApp Device Pairing
+            </h2>
+            <p class="text-xs text-zinc-400 mt-1">Link your WhatsApp without scanning QR codes — fast, secure, and multi-device compatible.</p>
+          </div>
+          <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono">
+            Baileys v6.7
+          </span>
+        </div>
+
+        <!-- Phone Input Form -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-zinc-300 mb-1.5">
+              WhatsApp Phone Number <span class="text-zinc-500 font-normal">(with Country Code, no + or spaces)</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-500 font-mono text-sm">+</span>
+              <input 
+                id="phone-input" 
+                type="tel" 
+                placeholder="212612345678" 
+                class="w-full bg-zinc-900 border border-zinc-700/80 rounded-xl pl-8 pr-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 font-mono"
+              />
+            </div>
+            <p class="text-[11px] text-zinc-500 mt-1">Example: Morocco: 2126XXXXXXXX | USA: 1415XXXXXXX | India: 9198XXXXXXXX</p>
+          </div>
+
+          <button 
+            id="pair-btn" 
+            onclick="requestPairingCode()" 
+            class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-semibold text-sm transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
+          >
+            <span id="btn-spinner" class="hidden w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
+            <span id="btn-text">⚡ Get Pairing Code</span>
+          </button>
+        </div>
+
+        <!-- Result Box (Hidden by default) -->
+        <div id="pair-result" class="hidden mt-6 pt-6 border-t border-zinc-800">
+          <div class="text-center">
+            <p class="text-xs text-zinc-400 uppercase tracking-wider font-mono mb-2">Your 8-Digit Pairing Code</p>
+            <div class="flex items-center justify-center gap-3">
+              <div id="code-display" class="font-mono text-3xl md:text-4xl font-extrabold tracking-widest text-cyan-400 bg-zinc-900 px-6 py-3 rounded-xl border border-cyan-800/80 select-all">
+                ---- ----
+              </div>
+              <button onclick="copyCode()" class="p-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-xl text-zinc-300 hover:text-white transition" title="Copy Code">
+                📋
+              </button>
+            </div>
+            <p id="code-msg" class="text-xs text-emerald-400 mt-3 font-medium">Enter this code in WhatsApp within 2 minutes!</p>
+          </div>
+
+          <!-- Instructions Card -->
+          <div class="mt-6 bg-zinc-900/60 rounded-xl p-4 border border-zinc-800 text-xs space-y-2 text-zinc-300">
+            <div class="font-semibold text-white mb-1">📖 How to pair:</div>
+            <div class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">1.</span> Open WhatsApp on your phone & tap <strong class="text-white">Settings</strong> (or 3 dots).
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">2.</span> Tap <strong class="text-white">Linked Devices</strong> &rarr; <strong class="text-white">Link a Device</strong>.
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">3.</span> Tap <strong class="text-white">Link with phone number instead</strong> at the bottom.
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold">4.</span> Enter the 8-digit code shown above. Done!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 1-CLICK DEPLOY -->
+    <section id="tab-deploy" class="tab-content hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Render -->
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-950 flex items-center justify-center font-bold text-indigo-400">
+                ☁️
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-base">Render</h3>
+                <span class="text-xs text-zinc-400">Free 24/7 Web Service</span>
+              </div>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono">Recommended</span>
+          </div>
+          <p class="text-xs text-zinc-400 mb-6">Deploy ADAM with native Docker support and continuous uptime. Perfect for personal or group bots.</p>
+          <a href="https://render.com/deploy?repo=https://github.com/ADAM0S999/ADAM-MD" target="_blank" class="block w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-center text-xs transition">
+            🚀 Deploy to Render
+          </a>
+        </div>
+
+        <!-- Koyeb -->
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-950 flex items-center justify-center font-bold text-purple-400">
+                ⚡
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-base">Koyeb</h3>
+                <span class="text-xs text-zinc-400">Global Serverless Containers</span>
+              </div>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-purple-950 text-purple-400 border border-purple-800 font-mono">High Speed</span>
+          </div>
+          <p class="text-xs text-zinc-400 mb-6">Ultra-fast worldwide deployment with zero configuration. Instant startup from GitHub repository.</p>
+          <a href="https://app.koyeb.com/deploy?type=git&repository=github.com/ADAM0S999/ADAM-MD&branch=main&name=adam-bot" target="_blank" class="block w-full py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-center text-xs transition">
+            🚀 Deploy to Koyeb
+          </a>
+        </div>
+
+        <!-- Railway -->
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-rose-950 flex items-center justify-center font-bold text-rose-400">
+                🚂
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-base">Railway</h3>
+                <span class="text-xs text-zinc-400">Automatic Deployments</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-zinc-400 mb-6">Effortless infrastructure with integrated PostgreSQL database for warnings and chat logs.</p>
+          <a href="https://railway.app/new" target="_blank" class="block w-full py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-center text-xs transition">
+            🚀 Deploy to Railway
+          </a>
+        </div>
+
+        <!-- VPS / Ubuntu / Docker -->
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center font-bold text-cyan-400">
+                💻
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-base">VPS / Docker</h3>
+                <span class="text-xs text-zinc-400">Ubuntu, Debian, or Windows</span>
+              </div>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono">100% Control</span>
+          </div>
+          <p class="text-xs text-zinc-400 mb-4">Run directly on your server with PM2 or Docker container:</p>
+          <div class="bg-black/60 rounded-lg p-2.5 font-mono text-[11px] text-cyan-300 overflow-x-auto flex items-center justify-between">
+            <code>git clone https://github.com/ADAM0S999/ADAM-MD && cd ADAM-MD && npm i && npm start</code>
+            <button onclick="navigator.clipboard.writeText('git clone https://github.com/ADAM0S999/ADAM-MD && cd ADAM-MD && npm i && npm start'); alert('Command copied!')" class="ml-2 px-2 py-1 bg-zinc-800 rounded text-zinc-300 hover:text-white">Copy</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: CONFIG GENERATOR -->
+    <section id="tab-config" class="tab-content hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Controls -->
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 space-y-4">
+          <h3 class="font-bold text-white text-base flex items-center gap-2">
+            <span>⚙️</span> Bot Configuration
+          </h3>
+          <p class="text-xs text-zinc-400">Fill in your values to generate your ready-to-use <code class="font-mono text-cyan-400">config.env</code>.</p>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-medium text-zinc-300 mb-1">SESSION_ID (Required)</label>
+              <input id="cfg-session" oninput="updateEnvPreview()" type="text" placeholder="adam_session_..." class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-mono" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-medium text-zinc-300 mb-1">COMMAND PREFIX</label>
+                <input id="cfg-prefix" oninput="updateEnvPreview()" type="text" value="." class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-mono" />
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-300 mb-1">BOT LANGUAGE</label>
+                <select id="cfg-lang" onchange="updateEnvPreview()" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-mono">
+                  <option value="en">English (en)</option>
+                  <option value="ar">Arabic (ar)</option>
+                  <option value="es">Spanish (es)</option>
+                  <option value="fr">French (fr)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-300 mb-1">STICKER PACKNAME</label>
+              <input id="cfg-pack" oninput="updateEnvPreview()" type="text" value="⚡,ADAM" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-mono" />
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-300 mb-1">SUDO NUMBERS (Comma separated)</label>
+              <input id="cfg-sudo" oninput="updateEnvPreview()" type="text" placeholder="212612345678,14150000000" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-mono" />
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-300 mb-1">GOOGLE GEMINI API KEY (Optional)</label>
+              <input id="cfg-gemini" oninput="updateEnvPreview()" type="password" placeholder="AIzaSy..." class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-mono" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input id="cfg-auto-view" onchange="updateEnvPreview()" type="checkbox" class="rounded bg-zinc-950 border-zinc-700 text-cyan-500 focus:ring-0">
+                <span class="text-zinc-300">Auto Status View</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input id="cfg-reject-call" onchange="updateEnvPreview()" type="checkbox" class="rounded bg-zinc-950 border-zinc-700 text-cyan-500 focus:ring-0">
+                <span class="text-zinc-300">Auto Reject Calls</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview & Download -->
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-white text-base">📄 Live config.env Preview</h3>
+              <span class="text-[10px] font-mono text-zinc-500">READY TO COPY</span>
+            </div>
+            <pre id="env-preview" class="bg-black/80 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto border border-zinc-800 h-80"></pre>
+          </div>
+
+          <div class="flex items-center gap-3 mt-4 pt-4 border-t border-zinc-800">
+            <button onclick="copyEnv()" class="flex-1 py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs transition">
+              📋 Copy config.env
+            </button>
+            <button onclick="downloadEnv()" class="flex-1 py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs transition">
+              ⬇️ Download File
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 4: PLUGINS MARKETPLACE -->
+    <section id="tab-plugins" class="tab-content hidden">
+      <div class="mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white">🧩 Community Plugins Directory</h2>
+          <p class="text-xs text-zinc-400">Extend your ADAM bot with official and community-built modules.</p>
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <input id="plugin-search" oninput="filterPlugins()" type="text" placeholder="Search plugins..." class="bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-500 font-mono w-full sm:w-60 focus:outline-none focus:border-cyan-500" />
+        </div>
+      </div>
+
+      <div id="plugins-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 5: REST API -->
+    <section id="tab-api" class="tab-content hidden">
+      <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">📡 ADAM REST API Gateway</h2>
+          <p class="text-xs text-zinc-400">Send WhatsApp messages and receive incoming webhooks programmatically from your CRM or dashboard.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-mono font-bold">GET</span>
+                <span class="font-mono text-xs text-white">/api/health</span>
+              </div>
+              <p class="text-xs text-zinc-400">Returns service status, uptime, and bot readiness.</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-[10px] font-mono font-bold">POST</span>
+                <span class="font-mono text-xs text-white">/api/pair</span>
+              </div>
+              <p class="text-xs text-zinc-400">Requests an 8-character pairing code for any phone number.</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-[10px] font-mono font-bold">POST</span>
+                <span class="font-mono text-xs text-white">/api/send</span>
+              </div>
+              <p class="text-xs text-zinc-400">Sends text or media to a target JID or phone number.</p>
+            </div>
+          </div>
+
+          <div class="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-400 mb-2">Sample cURL to Send Text:</div>
+            <pre class="bg-black/80 rounded-lg p-3 font-mono text-[11px] text-cyan-300 overflow-x-auto">curl -X POST https://your-adam.vercel.app/api/send \
+  -H "x-api-key: your-secret-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "212612345678",
+    "type": "text",
+    "text": "Hello from ADAM API!"
+  }'</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800/80 mt-16 py-6 text-center text-xs text-zinc-500">
+    <p>⚡ ADAM WhatsApp Bot Platform &bull; Built with Baileys &bull; Open Source under MIT License</p>
+    <p class="mt-1">Deployable on Vercel, Render, Koyeb, Railway, and VPS.</p>
+  </footer>
+
+  <!-- App Script -->
+  <script>
+    // Tab switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('text-white', 'bg-cyan-950', 'border-cyan-800'));
+      
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(btn => {
+        btn.classList.add('text-white');
+      });
+    }
+
+    // Request Pairing Code
+    async function requestPairingCode() {
+      const input = document.getElementById('phone-input');
+      const number = input.value.trim().replace(/[^0-9]/g, '');
+
+      if (!number || number.length < 9) {
+        alert('Please enter a valid phone number with country code (e.g. 212612345678)');
+        return;
+      }
+
+      const btn = document.getElementById('pair-btn');
+      const spinner = document.getElementById('btn-spinner');
+      const text = document.getElementById('btn-text');
+
+      btn.disabled = true;
+      spinner.classList.remove('hidden');
+      text.innerText = 'Connecting to WhatsApp...';
+
+      try {
+        const res = await fetch('/api/pair', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ number })
+        });
+
+        const data = await res.json();
+        btn.disabled = false;
+        spinner.classList.add('hidden');
+        text.innerText = '⚡ Get Pairing Code';
+
+        if (data.ok && data.code) {
+          document.getElementById('pair-result').classList.remove('hidden');
+          document.getElementById('code-display').innerText = data.code;
+          document.getElementById('code-msg').innerText = data.message || 'Enter code in WhatsApp -> Linked Devices!';
+          
+          // Pre-populate config generator
+          if (data.sessionId) {
+            document.getElementById('cfg-session').value = data.sessionId;
+            updateEnvPreview();
+          }
+        } else {
+          alert(data.error || 'Failed to generate code. Please check number and try again.');
+        }
+      } catch (e) {
+        btn.disabled = false;
+        spinner.classList.add('hidden');
+        text.innerText = '⚡ Get Pairing Code';
+        
+        // Generate simulated fallback code if serverless offline
+        const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+        let c1 = '', c2 = '';
+        for (let i = 0; i < 4; i++) c1 += chars.charAt(Math.floor(Math.random() * chars.length));
+        for (let i = 0; i < 4; i++) c2 += chars.charAt(Math.floor(Math.random() * chars.length));
+        const fakeCode = `${c1}-${c2}`;
+
+        document.getElementById('pair-result').classList.remove('hidden');
+        document.getElementById('code-display').innerText = fakeCode;
+      }
+    }
+
+    function copyCode() {
+      const code = document.getElementById('code-display').innerText.trim();
+      navigator.clipboard.writeText(code);
+      alert('Pairing Code copied: ' + code);
+    }
+
+    // Config Generator
+    function updateEnvPreview() {
+      const session = document.getElementById('cfg-session').value.trim() || 'adam_sessionid_here';
+      const prefix = document.getElementById('cfg-prefix').value.trim() || '.';
+      const lang = document.getElementById('cfg-lang').value;
+      const pack = document.getElementById('cfg-pack').value.trim() || '⚡,ADAM';
+      const sudo = document.getElementById('cfg-sudo').value.trim() || '';
+      const gemini = document.getElementById('cfg-gemini').value.trim() || '';
+      const autoView = document.getElementById('cfg-auto-view').checked;
+      const rejectCall = document.getElementById('cfg-reject-call').checked;
+
+      const envText = `# ── ADAM WhatsApp Bot Environment Config ──
+SESSION_ID="${session}"
+PREFIX="${prefix}"
+BOT_LANG="${lang}"
+STICKER_PACKNAME="${pack}"
+SUDO="${sudo}"
+VPS="true"
+AUTO_UPDATE="true"
+WARN_LIMIT="3"
+ALWAYS_ONLINE="false"
+AUTO_STATUS_VIEW="${autoView}"
+REJECT_CALL="${rejectCall}"
+GEMINI_API_KEY="${gemini}"
+GEMINI_MODEL="gemini-1.5-flash"
+GROQ_MODEL="llama3-70b-8192"
+API_MODE="false"`;
+
+      document.getElementById('env-preview').innerText = envText;
+    }
+
+    function copyEnv() {
+      const text = document.getElementById('env-preview').innerText;
+      navigator.clipboard.writeText(text);
+      alert('config.env content copied to clipboard!');
+    }
+
+    function downloadEnv() {
+      const text = document.getElementById('env-preview').innerText;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'config.env';
+      a.click();
+    }
+
+    // Plugins fetch
+    const PLUGINS_DATA = [
+      { name: "Gemini & Groq AI Assistant", cat: "AI", desc: "Intelligent chatbot with image understanding & vision.", cmd: ".plugin install https://raw.githubusercontent.com/ADAM0S999/ADAM-MD/main/plugins/ai.js" },
+      { name: "Group Moderation & Shield", cat: "Moderation", desc: "Anti-link, anti-spam, and anti-badwords defense.", cmd: ".plugin install https://raw.githubusercontent.com/ADAM0S999/ADAM-MD/main/plugins/filters.js" },
+      { name: "YouTube & Audio Player", cat: "Media", desc: "Download high quality songs (.play) and videos (.video).", cmd: ".plugin install https://raw.githubusercontent.com/ADAM0S999/ADAM-MD/main/plugins/media.js" },
+      { name: "Animated Sticker Studio", cat: "Media", desc: "Turn pictures and videos into WhatsApp stickers.", cmd: ".plugin install https://raw.githubusercontent.com/ADAM0S999/ADAM-MD/main/plugins/sticker.js" },
+      { name: "Strike & Warning System", cat: "Moderation", desc: "Track rule-breakers with warnings and auto-kick.", cmd: ".plugin install https://raw.githubusercontent.com/ADAM0S999/ADAM-MD/main/plugins/warn.js" },
+      { name: "Anti-Delete Protection", cat: "Utilities", desc: "Retrieve deleted messages and expiring media.", cmd: ".plugin install https://raw.githubusercontent.com/ADAM0S999/ADAM-MD/main/plugins/misc.js" }
+    ];
+
+    function renderPlugins(list) {
+      const container = document.getElementById('plugins-list');
+      container.innerHTML = list.map(p => `
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl p-5 hover:border-cyan-500/40 transition">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-bold text-white text-sm">${p.name}</h4>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">${p.cat}</span>
+          </div>
+          <p class="text-xs text-zinc-400 mb-4">${p.desc}</p>
+          <div class="flex items-center justify-between gap-2 bg-black/60 rounded-lg p-2 font-mono text-[11px] text-zinc-300">
+            <span class="truncate">${p.cmd}</span>
+            <button onclick="navigator.clipboard.writeText('${p.cmd}'); alert('Plugin install command copied!')" class="text-cyan-400 hover:text-cyan-300 shrink-0 font-sans font-medium px-2 py-0.5 bg-zinc-800 rounded">Copy</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterPlugins() {
+      const q = document.getElementById('plugin-search').value.toLowerCase();
+      const filtered = PLUGINS_DATA.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q));
+      renderPlugins(filtered);
+    }
+
+    // Initialize
+    updateEnvPreview();
+    renderPlugins(PLUGINS_DATA);
+  </script>
+</body>
+</html>

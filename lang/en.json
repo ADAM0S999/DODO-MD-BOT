@@ -1,0 +1,89 @@
+{
+  "general": {
+    "menu": "Show the command menu",
+    "help": "Show help for a command",
+    "alive": "Bot is alive and running",
+    "ping": "Check bot latency",
+    "uptime": "Bot uptime",
+    "owner": "Show bot owner info",
+    "speed": "Show system information"
+  },
+  "group": {
+    "kick": {
+      "success": "✅ Kicked: {user}",
+      "noTarget": "❌ Please mention or reply to the user to kick.",
+      "notAdmin": "❌ Only admins can kick members.",
+      "botNotAdmin": "❌ I need to be an admin to kick members."
+    },
+    "add": {
+      "success": "✅ Added: {user}",
+      "fail": "⚠️ Failed to add: {numbers}",
+      "noNumber": "❌ Please provide a phone number. Usage: .add 263XXXXXXXXX"
+    },
+    "promote": {
+      "success": "⬆️ Promoted to admin: {user}",
+      "noTarget": "❌ Please mention or reply to the user to promote."
+    },
+    "demote": {
+      "success": "⬇️ Demoted to member: {user}",
+      "noTarget": "❌ Please mention or reply to the admin to demote."
+    },
+    "mute": {
+      "success": "🔇 Group has been muted. Only admins can send messages.",
+      "fail": "❌ Failed to mute the group."
+    },
+    "unmute": {
+      "success": "🔊 Group has been unmuted. Everyone can send messages.",
+      "fail": "❌ Failed to unmute the group."
+    },
+    "invite": "🔗 Group Invite Link:\n{link}",
+    "revoke": "🔒 Group invite link revoked.",
+    "ginfo": "📋 Group Info\n\nName: {name}\nMembers: {count}\nCreated: {date}\nAdmins: {admins}"
+  },
+  "warn": {
+    "warned": "⚠️ Warning {warn}/{limit} — {reason}\nUser: {user}",
+    "reset": "✅ Warnings reset for {user}.",
+    "kick": "🚫 {user} has been removed after reaching {limit} warnings.",
+    "noTarget": "❌ Please mention or reply to the user to warn.",
+    "noWarnings": "ℹ️ {user} has no warnings.",
+    "listEmpty": "✅ No active warnings in this group."
+  },
+  "filters": {
+    "antilinkOn": "✅ Anti-Link is now ON.",
+    "antilinkOff": "🔴 Anti-Link is now OFF.",
+    "antispamOn": "✅ Anti-Spam is now ON.",
+    "antispamOff": "🔴 Anti-Spam is now OFF.",
+    "antiwordOn": "✅ Anti-Word is now ON.",
+    "antiwordOff": "🔴 Anti-Word is now OFF.",
+    "antilink": "⚠️ {user}, links are not allowed in this group.",
+    "antispam": "⚠️ {user}, spamming is not allowed in this group.",
+    "antiword": "⚠️ {user}, that word is not allowed in this group."
+  },
+  "sticker": {
+    "creating": "⏳ Creating sticker…",
+    "success": "✅ Here is your sticker!",
+    "noMedia": "❌ Please reply to an image, video, or GIF.",
+    "fail": "❌ Failed to create sticker: {error}"
+  },
+  "ai": {
+    "thinking": "🤖 Thinking…",
+    "noPrompt": "❌ Please provide a question.",
+    "noKey": "❌ {provider} API key is not configured.",
+    "error": "❌ AI error: {error}"
+  },
+  "media": {
+    "searching": "🔍 Searching…",
+    "downloading": "⬇️ Downloading…",
+    "tooLarge": "❌ File too large (limit: {limit}MB).",
+    "notFound": "❌ Could not find: {query}",
+    "error": "❌ Failed: {error}"
+  },
+  "errors": {
+    "groupOnly": "❌ This command only works in groups.",
+    "adminOnly": "❌ Only group admins can use this command.",
+    "botAdmin": "❌ I need to be an admin for that.",
+    "ownerOnly": "❌ Only the bot owner can use this command.",
+    "noMedia": "❌ Please reply to a media message.",
+    "generic": "❌ An error occurred. Please try again."
+  }
+}

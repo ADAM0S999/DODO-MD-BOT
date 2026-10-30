@@ -1,0 +1,35 @@
+{
+  "_comment": "Multi-session configuration for ADAM bot. Copy to config.json and fill in your session IDs.",
+  "sessions": [
+    {
+      "id": "session1",
+      "sessionId": "adam_sessionid_1",
+      "prefix": ".",
+      "sudo": "263XXXXXXXXX",
+      "enabled": true,
+      "description": "Primary bot session"
+    },
+    {
+      "id": "session2",
+      "sessionId": "adam_sessionid_2",
+      "prefix": "!",
+      "sudo": "263XXXXXXXXX",
+      "enabled": false,
+      "description": "Secondary bot session"
+    },
+    {
+      "id": "session3",
+      "sessionId": "adam_sessionid_3",
+      "prefix": "/",
+      "sudo": "263XXXXXXXXX",
+      "enabled": false,
+      "description": "Third bot session"
+    }
+  ],
+  "global": {
+    "dbPath": "./database.db",
+    "logLevel": "silent",
+    "timezone": "Africa/Harare",
+    "apiPort": 3000
+  }
+}

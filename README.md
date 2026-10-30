@@ -1,12 +1,30 @@
 # ⚡ ADAM WhatsApp Bot
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FADAM0S999%2FADAM-MD)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ADAM0S999/ADAM-MD)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green?logo=node.js)](https://nodejs.org)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.0.0-purple)]()
 [![Baileys](https://img.shields.io/badge/Powered%20by-Baileys-25D366?logo=whatsapp)](https://github.com/WhiskeySockets/Baileys)
 
 > A powerful, clean, multi-session WhatsApp bot built on [Baileys](https://github.com/WhiskeySockets/Baileys).  
-> Plugin-based architecture · Group moderation · AI chat · Media tools · REST API
+> Web Dashboard on Vercel · Pairing Code Generator · Group moderation · AI chat · Media tools · REST API
+
+---
+
+## 🌐 Web Dashboard & Vercel Deployment (like levanter-delta.vercel.app)
+
+ADAM includes a full **Vercel Web Platform & Pairing Code Generator**:
+- 🔑 **8-Digit Phone Pairing Code**: Link WhatsApp directly by phone number without terminal.
+- 🚀 **1-Click Cloud Deploy Hub**: Deploy straight to Render, Koyeb, Railway, or Heroku.
+- ⚙️ **Config Generator**: Visual form to generate and download `config.env`.
+- 🧩 **Plugins Marketplace**: Searchable directory of official & community plugins.
+- 📡 **REST API Gateway**: Interactive tester for `/api/send`, `/api/health`, and webhooks.
+
+Deploy the dashboard to Vercel in 1 click:
+```
+https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FADAM0S999%2FADAM-MD
+```
 
 ---
 
